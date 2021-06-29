@@ -12,32 +12,34 @@ interface BooleanResult {
 
 export default function createNewAccount(req: NextApiRequest, res: NextApiResponse<BooleanResult>) {
   const { username, password}: CreateNewAccountParameters = JSON.parse(req.body);
-  let usernameValid = true;
-  let passwordValid = true;
+  let usernameValid = false;
+  let passwordValid = false;
   let result = false;
-  console.log(username.length, password.length)
 
-  if (username.length < 9 || username.length > 50) {
-    usernameValid = false;
+  if (username.length >= 10 && username.length <= 50) {
+    usernameValid = true;
   }
 
   //Consider assigning RegEx to specific variables for future implementation of 
   //real time feedback on which password area is failing
   if (password.length >= 20 && password.length <= 50) {
-    if (!/[!@#$%]/.test(password)) {
-      passwordValid = false;
-    }
+    // if (!/[!@#$%]/.test(password)) {
+    //   passwordValid = false;
+    // }
 
-    if(!/[a-zA-z]/.test(password)) {
-      passwordValid = false;
-    }
+    // if(!/[a-zA-z]/.test(password)) {
+    //   passwordValid = false;
+    // }
 
-    if(!/[0-9]/.test(password)) {
-      passwordValid = false;
+    // if(!/[0-9]/.test(password)) {
+    //   passwordValid = false;
+    // }
+
+    if (/[!@#$%]/.test(password) && /[a-zA-z]/.test(password) && /[0-9]/.test(password)) {
+      passwordValid = true;
     }
   }
   
-  console.log(usernameValid, passwordValid)
   if (usernameValid && passwordValid) {
     result = true;
   }
