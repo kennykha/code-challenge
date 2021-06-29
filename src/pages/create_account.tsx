@@ -20,16 +20,33 @@ import styles from 'src/styles/create_account.module.scss';
       evt.preventDefault();
 
       console.log(username, password)
+      const response = await fetch('/api/create_new_account', {
+        method: 'POST',
+        body: JSON.stringify({
+          username: username, 
+          password: password}),
+      })    
+      .then(response => response.json())
+      .then(response => console.log(response));
+
     }
 
+    //State for username & password
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-  
+    //State flag for weak password & invalid password
+    const [weakPassword, setWeakPassword] = useState(false);
+    const [invalidPassword, setInvalidPassword] = useState(true);
+    
+    //Function for handling state change of username & password
     const handleDataChange = (type) => {
+      let usernameElement = ((document.getElementById("username") as HTMLInputElement).value);
+      let passwordElement = ((document.getElementById("password") as HTMLInputElement).value);
+      
       if (type === "username") {
-        setUsername((document.getElementById("username") as HTMLInputElement).value)
+        setUsername(usernameElement);
       } else if (type === "password") {
-        setPassword((document.getElementById("password") as HTMLInputElement).value)
+        setPassword(passwordElement);
       }
     }
 
