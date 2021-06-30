@@ -27,7 +27,20 @@ import styles from 'src/styles/create_account.module.scss';
           password: password}),
       })    
       .then(response => response.json())
-      .then(response => console.log(response));
+      .then(response => {
+        const {username, password} = response.errors;
+        if (username === "false") {
+          setInvalidUsername(true);
+        } else {
+          setInvalidUsername(false);
+        }
+
+        if (password === "false") {
+          setInvalidPassword(true);
+        } else {
+          setInvalidPassword(false);
+        }
+      });
 
     }
 
@@ -36,7 +49,8 @@ import styles from 'src/styles/create_account.module.scss';
     const [password, setPassword] = useState('');
     //State flag for weak password & invalid password
     const [weakPassword, setWeakPassword] = useState(false);
-    const [invalidPassword, setInvalidPassword] = useState(true);
+    const [invalidUsername, setInvalidUsername] = useState(false);
+    const [invalidPassword, setInvalidPassword] = useState(false);
     
     //Function for handling state change of username & password
     const handleDataChange = (type) => {
@@ -61,6 +75,16 @@ import styles from 'src/styles/create_account.module.scss';
           <input type='text' id='password' placeholder="Password" value={password} onChange={() =>handleDataChange('password')}/>
           <button>Create Account</button>
         </form>
+        <ul>
+        {invalidUsername ? (<li>Username should be between 10 and 50 characters</li>) : null}
+        {invalidPassword ? (
+          <div>
+            <li>Password should be between 20 and 50 characters</li>
+            <li>Password contains at least 1 symbol (!,@,#,$,%)</li>
+            <li>Password contains at least 1 letter (a-zA-Z)</li>
+            <li>Password contains at least 1 number (0-9)</li>
+          </div>) : null}
+          </ul>
       </article>
     </>
   );

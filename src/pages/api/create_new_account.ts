@@ -22,7 +22,9 @@ export default function createNewAccount(req: NextApiRequest, res: NextApiRespon
 
   //Consider assigning RegEx to specific variables for future implementation of 
   //real time feedback on which password area is failing
-  if (password.length >= 20 && password.length <= 50) {
+  if (password.length >= 20 && password.length <= 50 && /[!@#$%]/.test(password) && /[a-zA-z]/.test(password) && /[0-9]/.test(password)) {
+      passwordValid = true;
+    }
     // if (!/[!@#$%]/.test(password)) {
     //   passwordValid = false;
     // }
@@ -34,12 +36,6 @@ export default function createNewAccount(req: NextApiRequest, res: NextApiRespon
     // if(!/[0-9]/.test(password)) {
     //   passwordValid = false;
     // }
-
-    if (/[!@#$%]/.test(password) && /[a-zA-z]/.test(password) && /[0-9]/.test(password)) {
-      passwordValid = true;
-    }
-  }
-  
   if (usernameValid && passwordValid) {
     result = true;
   }
