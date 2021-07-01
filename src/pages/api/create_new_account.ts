@@ -15,6 +15,12 @@ type errorType = {
 }
 
 export default function createNewAccount(req: NextApiRequest, res: NextApiResponse<BooleanResult>) {
+  //Should figure out how to handle empty object
+  if (Object.keys(JSON.parse(req.body)).length === 0) {
+    res.status(200).json({result: true})
+    return;
+  }
+  
   const { username, password}: CreateNewAccountParameters = JSON.parse(req.body);
   let usernameValid = {
     usernameLength: false
