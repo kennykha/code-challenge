@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap");
+
 .article {
   width: 100vw;
   height: 100vh;
@@ -6,10 +8,11 @@
   align-items: center;
   background: rgba(255, 255, 255, 0.6);
   flex-direction: column;
+  font-family: "Lato", sans-serif;
 }
 
 .form {
-  width: 350px;
+  width: 400px;
   box-shadow: 0 2px 14px rgba(0, 0, 0, 0.15);
   padding: 16px;
   border-radius: 16px;
@@ -35,7 +38,7 @@
 
 .inputErrors,
 .inputSuccess {
-  width: 350px;
+  width: 400px;
   box-shadow: 0 2px 14px rgba(0, 0, 0, 0.15);
   padding: 16px;
   border-radius: 16px;
@@ -47,7 +50,22 @@
   text-align: center;
 }
 
-// .userInput {
-//   margin: 10px;
-//   height: 20px;
-// }
+.userInput {
+  outline: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  margin-bottom: 5px;
+}
+
+.createButton {
+  margin-top: 20px;
+  font-family: inherit;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.container {
+  height: 300px;
+  position: relative;
+}

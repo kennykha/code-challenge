@@ -19,7 +19,6 @@ export default function CreateAccount() {
     })    
     .then(response => response.json())
     .then(response => {
-      console.log(response)
       handleSubmitState(true);
       if (Object.keys(inputBody).length === 0) {
         return;
@@ -106,27 +105,33 @@ export default function CreateAccount() {
         <title>Create Account</title>
       </Head>
       <article className={styles.article}>
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <h1 className={styles.newAccountHeader}>Create New Account</h1>
-          <input type='text' className={styles.userInput} placeholder="Username" value={username} onChange={handleUsernameChange}/>
-          <input type='password' className={styles.userInput} placeholder="Password" value={password} onChange={handlePasswordChange}/>
-          <button className={styles.createButton}>Create Account</button>
-        </form>
-        {(submitState && !allValidations) && (
-          <ul className={styles.inputErrors}>
-            {weakPassword && (<li className={styles.invalid}>- Passwordword chosen is an exposed password</li>)}
-            <li className={invalidUsername ? styles.valid : styles.invalid}>- Username should be between 10 and 50 characters</li>
-            <li className={invalidPasswordLength ? styles.valid : styles.invalid}>- Password should be between 20 and 50 characters</li>
-            <li className={invalidPasswordSpecial ? styles.valid : styles.invalid}>- Password contains at least 1 symbol (!,@,#,$,%)</li>
-            <li className={invalidPasswordLetter ? styles.valid : styles.invalid}>- Password contains at least 1 letter (a-zA-Z)</li>
-            <li className={invalidPasswordNumber ? styles.valid : styles.invalid}>- Password contains at least 1 number (0-9)</li>
-          </ul>
-        )}
-        {allValidations && (
-          <ul className={styles.inputSuccess}>
-            <li className={styles.valid}>User account has been created</li>
-          </ul>
-        )}
+        <div className={styles.container}>
+          <form className={styles.form} onSubmit={handleSubmit}>
+            <h1 className={styles.newAccountHeader}>Create New Account</h1>
+            <div>Username</div>
+            <input type='text' className={styles.userInput} value={username} onChange={handleUsernameChange}/>
+            <div>Password</div>
+            <input type='password' className={styles.userInput} value={password} onChange={handlePasswordChange}/>
+            <button className={styles.createButton}>Create Account</button>
+          </form>
+          <div className={styles.validations}>
+          {(submitState && !allValidations) && (
+            <ul className={styles.inputErrors}>
+              {weakPassword && (<li className={styles.invalid}>- Passwordword chosen is an exposed password</li>)}
+              <li className={invalidUsername ? styles.valid : styles.invalid}>- Username should be between 10 and 50 characters</li>
+              <li className={invalidPasswordLength ? styles.valid : styles.invalid}>- Password should be between 20 and 50 characters</li>
+              <li className={invalidPasswordSpecial ? styles.valid : styles.invalid}>- Password contains at least 1 symbol (!,@,#,$,%)</li>
+              <li className={invalidPasswordLetter ? styles.valid : styles.invalid}>- Password contains at least 1 letter (a-zA-Z)</li>
+              <li className={invalidPasswordNumber ? styles.valid : styles.invalid}>- Password contains at least 1 number (0-9)</li>
+            </ul>
+          )}
+          {allValidations && (
+            <ul className={styles.inputSuccess}>
+              <li className={styles.valid}>User account has been created</li>
+            </ul>
+          )}
+          </div>
+        </div>
       </article>
     </>
   );
