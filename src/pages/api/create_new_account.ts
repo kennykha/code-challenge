@@ -31,7 +31,6 @@ export default function createNewAccount(req: NextApiRequest, res: NextApiRespon
     letter: false,
     number: false
   }
-  let result = false;
 
   if (username.length >= 10 && username.length <= 50) {
     usernameValid.usernameLength = true;
@@ -54,15 +53,7 @@ export default function createNewAccount(req: NextApiRequest, res: NextApiRespon
   }
 
   //Result validation
-  if (!usernameValid.usernameLength) {
-    result = false;
-  }
-
-  for (const key in passwordValid) {
-    if (!passwordValid[key]) {
-      result = false;
-    }
-  }
+  const result = usernameValid.usernameLength && Object.values(passwordValid).every(validation => validation);
 
   res.status(200).json({ result: result, errors: {
     username: usernameValid, 

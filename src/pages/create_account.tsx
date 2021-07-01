@@ -24,6 +24,12 @@ export default function CreateAccount() {
       if (Object.keys(inputBody).length === 0) {
         return;
       }
+
+      if (response.result) {
+        setAllValidations(true);
+        return;
+      }
+
       const { usernameLength } = response.errors.username;
       if (!usernameLength) {
         setInvalidUsername(false);
@@ -81,6 +87,7 @@ export default function CreateAccount() {
   const [invalidPasswordSpecial, setInvalidPasswordSpecial] = useState(false);
   const [invalidPasswordLetter, setInvalidPasswordLetter] = useState(false);
   const [invalidPasswordNumber, setInvalidPasswordNumber] = useState(false);
+  const [allValidations, setAllValidations] = useState(false);
   
   //Functions for handling state change of username & password
   const handleUsernameChange = (e : any) => {
@@ -100,19 +107,20 @@ export default function CreateAccount() {
         <form className={styles.form} onSubmit={handleSubmit}>
           <h1 className={styles.newAccountHeader}>Create New Account</h1>
           <input type='text' className={styles.userInput} placeholder="Username" value={username} onChange={handleUsernameChange}/>
-          <input type='text' className={styles.userInput} placeholder="Password" value={password} onChange={handlePasswordChange}/>
+          <input type='password' className={styles.userInput} placeholder="Password" value={password} onChange={handlePasswordChange}/>
           <button className={styles.createButton}>Create Account</button>
         </form>
-        {submitState && (
+        {(submitState && !allValidations) && (
           <ul className={styles.inputErrors}>
             {weakPassword && (<li className={styles.invalid}>- Passwordword chosen is an exposed password</li>)}
-            {invalidUsername ? (<li className={styles.valid}>- Username should be between 10 and 50 characters</li>) : (<li className={styles.invalid}>- Username should be between 10 and 50 characters</li>)}
-            {invalidPasswordLength ? (<li className={styles.valid}>- Password should be between 20 and 50 characters</li>) : (<li className={styles.invalid}>- Password should be between 20 and 50 characters</li>)}
-            {invalidPasswordSpecial ? (<li className={styles.valid}>- Password contains at least 1 symbol (!,@,#,$,%)</li>) : (<li className={styles.invalid}>- Password contains at least 1 symbol (!,@,#,$,%)</li>)}
-            {invalidPasswordLetter ? (<li className={styles.valid}>- Password contains at least 1 letter (a-zA-Z)</li>) : (<li className={styles.invalid}>- Password contains at least 1 letter (a-zA-Z)</li>)}
-            {invalidPasswordNumber ? (<li className={styles.valid}>- Password contains at least 1 number (0-9)</li>) : (<li className={styles.invalid}>- Password contains at least 1 number (0-9)</li>)}
+            <li className={invalidUsername ? styles.valid : styles.invalid}>- Username should be between 10 and 50 characters</li>
+            <li className={invalidPasswordLength ? styles.valid : styles.invalid}>- Password should be between 20 and 50 characters</li>
+            <li className={invalidPasswordSpecial ? styles.valid : styles.invalid}>- Password contains at least 1 symbol (!,@,#,$,%)</li>
+            <li className={invalidPasswordLetter ? styles.valid : styles.invalid}>- Password contains at least 1 letter (a-zA-Z)</li>
+            <li className={invalidPasswordNumber ? styles.valid : styles.invalid}>- Password contains at least 1 number (0-9)</li>
           </ul>
         )}
+        {allValidations && (<ul className={styles.inputSuccess}><li className={styles.valid}>User account has been created</li></ul>)}
       </article>
     </>
   );
