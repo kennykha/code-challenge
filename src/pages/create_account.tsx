@@ -27,6 +27,8 @@ export default function CreateAccount() {
 
       if (response.result) {
         setAllValidations(true);
+        setUsername('');
+        setPassword('');
         return;
       }
 
@@ -120,7 +122,11 @@ export default function CreateAccount() {
             <li className={invalidPasswordNumber ? styles.valid : styles.invalid}>- Password contains at least 1 number (0-9)</li>
           </ul>
         )}
-        {allValidations && (<ul className={styles.inputSuccess}><li className={styles.valid}>User account has been created</li></ul>)}
+        {allValidations && (
+          <ul className={styles.inputSuccess}>
+            <li className={styles.valid}>User account has been created</li>
+          </ul>
+        )}
       </article>
     </>
   );
