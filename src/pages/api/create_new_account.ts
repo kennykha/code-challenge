@@ -7,38 +7,59 @@ interface CreateNewAccountParameters {
 
 interface BooleanResult {
   result: boolean;
-  errors?: Record<string, string>;
+  errors?: Record<string, errorType>;
+}
+
+type errorType = {
+  [key: string]: boolean
 }
 
 export default function createNewAccount(req: NextApiRequest, res: NextApiResponse<BooleanResult>) {
   const { username, password}: CreateNewAccountParameters = JSON.parse(req.body);
-  let usernameValid = false;
-  let passwordValid = false;
+  let usernameValid = {
+    usernameLength: false
+  }
+  let passwordValid = {
+    length: false,
+    specialCharacter: false,
+    letter: false,
+    number: false
+  }
   let result = false;
 
   if (username.length >= 10 && username.length <= 50) {
-    usernameValid = true;
+    usernameValid.usernameLength = true;
   }
 
-  //Consider assigning RegEx to specific variables for future implementation of 
-  //real time feedback on which password area is failing
-  if (password.length >= 20 && password.length <= 50 && /[!@#$%]/.test(password) && /[a-zA-z]/.test(password) && /[0-9]/.test(password)) {
-      passwordValid = true;
+  if (password.length >= 20 && password.length <= 50) {
+      passwordValid.length = true;
     }
-    // if (!/[!@#$%]/.test(password)) {
-    //   passwordValid = false;
-    // }
 
-    // if(!/[a-zA-z]/.test(password)) {
-    //   passwordValid = false;
-    // }
-
-    // if(!/[0-9]/.test(password)) {
-    //   passwordValid = false;
-    // }
-  if (usernameValid && passwordValid) {
-    result = true;
+  if (/[!@#$%]/.test(password)) {
+    passwordValid.specialCharacter = true;
   }
-  
-  res.status(200).json({ result: result, errors: {username: `${usernameValid}`, password:`${passwordValid}`}});
+
+  if(/[a-zA-z]/.test(password)) {
+    passwordValid.letter = true;
+  }
+
+  if(/[0-9]/.test(password)) {
+    passwordValid.number = true;
+  }
+
+  //Result validation
+  if (!usernameValid.usernameLength) {
+    result = false;
+  }
+
+  for (const key in passwordValid) {
+    if (!passwordValid[key]) {
+      result = false;
+    }
+  }
+
+  res.status(200).json({ result: result, errors: {
+    username: usernameValid, 
+    password: passwordValid
+  }});
 }

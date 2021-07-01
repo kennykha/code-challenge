@@ -5,6 +5,7 @@
   justify-content: center;
   align-items: center;
   background: rgba(255, 255, 255, 0.6);
+  flex-direction: column;
 }
 
 .form {
@@ -13,4 +14,33 @@
   padding: 16px;
   border-radius: 16px;
   background: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.newAccountHeader {
+  align-self: center;
+}
+
+.valid {
+  color: rgb(13, 220, 13);
+  margin: 3px;
+}
+
+.invalid {
+  color: red;
+  margin: 3px;
+}
+
+.userInput {
+}
+
+.inputErrors {
+  width: 350px;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.15);
+  padding: 16px;
+  border-radius: 16px;
+  background: #fff;
+  list-style-type: none;
 }
