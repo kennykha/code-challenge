@@ -19,7 +19,6 @@ export default function CreateAccount() {
     })    
     .then(response => response.json())
     .then(response => {
-      console.log(response)
       handleSubmitState(true);
       if (Object.keys(inputBody).length === 0) {
         setInvalidUsername(false);
