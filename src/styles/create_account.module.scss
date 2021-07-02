@@ -22,10 +22,6 @@
   flex-direction: column;
 }
 
-.newAccountHeader {
-  align-self: center;
-}
-
 .valid {
   color: rgb(13, 220, 13);
   margin: 3px;
@@ -39,6 +35,7 @@
 .inputErrors,
 .inputSuccess {
   width: 400px;
+  font-size: 14px;
   box-shadow: 0 2px 14px rgba(0, 0, 0, 0.15);
   padding: 16px;
   border-radius: 16px;
@@ -52,20 +49,48 @@
 
 .userInput {
   outline: none;
+  border: 2px solid rgb(94, 153, 153);
   border-top: none;
   border-left: none;
   border-right: none;
   margin-bottom: 5px;
+  color: rgb(45, 50, 61);
+  font-family: inherit;
 }
 
 .createButton {
   margin-top: 20px;
+  font-size: 16px;
+  font-weight: 200;
+  background-color: rgb(86, 97, 97);
+  color: rgb(255, 255, 255);
   font-family: inherit;
   border-radius: 16px;
+  letter-spacing: 1px;
   cursor: pointer;
+  text-align: center;
+  border: 1px solid rgb(255, 255, 255);
+  border-radius: 16px;
+  height: 40px;
 }
 
 .container {
   height: 300px;
   position: relative;
+}
+
+.newAccountHeader {
+  align-self: center;
+  color: rgb(45, 50, 61);
+  margin-top: 0;
+}
+
+.userHeader {
+  font-size: 16px;
+  margin-bottom: 16px;
+  color: rgb(45, 50, 61);
+}
+
+.logo {
+  align-self: center;
 }

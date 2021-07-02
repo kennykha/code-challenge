@@ -19,8 +19,15 @@ export default function CreateAccount() {
     })    
     .then(response => response.json())
     .then(response => {
+      console.log(response)
       handleSubmitState(true);
       if (Object.keys(inputBody).length === 0) {
+        setInvalidUsername(false);
+        setInvalidPasswordLength(false);
+        setInvalidPasswordSpecial(false);
+        setInvalidPasswordLetter(false);
+        setInvalidPasswordLength(false);
+        setInvalidPasswordNumber(false);
         return;
       }
 
@@ -107,10 +114,11 @@ export default function CreateAccount() {
       <article className={styles.article}>
         <div className={styles.container}>
           <form className={styles.form} onSubmit={handleSubmit}>
+            <img className={styles.logo} src="https://png.pngtree.com/template/20190316/ourmid/pngtree-mountain-logo-image_77486.jpg" width="75" height="75"/>
             <h1 className={styles.newAccountHeader}>Create New Account</h1>
-            <div>Username</div>
+            <div className={styles.userHeader}>Username</div>
             <input type='text' className={styles.userInput} value={username} onChange={handleUsernameChange}/>
-            <div>Password</div>
+            <div className={styles.userHeader}>Password</div>
             <input type='password' className={styles.userInput} value={password} onChange={handlePasswordChange}/>
             <button className={styles.createButton}>Create Account</button>
           </form>
